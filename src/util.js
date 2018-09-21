@@ -74,12 +74,15 @@ var util = Kalendae.util = {
 		if (elem.attachEvent) { // IE only.  The "on" is mandatory.
 			elem.attachEvent("on" + eventName, listener);
 		} else { // Other browsers.
-			if(eventName === 'mousedown' && util.isTouchDevice()) {
-				//works on touch devices
-				elem.addEventListener('touchstart', listener, false);
-			} else {
-				elem.addEventListener(eventName, listener, false);
-			}
+			// Because touchstart cascades down to 'mousedown' (source: https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Supporting_both_TouchEvent_and_MouseEvent), we should not need this.
+			// if(eventName === 'mousedown' && util.isTouchDevice()) {
+			// 	//works on touch devices
+			// 	elem.addEventListener('touchstart', listener, false);
+			// } else {
+			// 	elem.addEventListener(eventName, listener, false);
+			// }
+
+			elem.addEventListener(eventName, listener, false);
 		}
 		return listener;
 	},
